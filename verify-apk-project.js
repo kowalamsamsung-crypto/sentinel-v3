@@ -1,12 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-const root = path.join(__dirname, '..');
+const root = __dirname;
 const required = [
-  '.github/workflows/build-apk.yml',
   'capacitor.config.json',
   'package.json',
-  'scripts/patch-android.js',
+  'patch-android.js',
   'native/java/pl/sentinel/app/MainActivity.java',
   'native/java/pl/sentinel/app/ScanActivity.java',
   'native/java/pl/sentinel/app/ScannerPlugin.java',
@@ -34,7 +33,7 @@ for (const file of required) {
   if (!fs.existsSync(path.join(root, file))) throw new Error('Brak wymaganego pliku: ' + file);
 }
 
-new Function(fs.readFileSync(path.join(root, 'scripts/patch-android.js'), 'utf8'));
+new Function(fs.readFileSync(path.join(root, 'patch-android.js'), 'utf8'));
 new Function(fs.readFileSync(path.join(root, 'www/modules/report-history.js'), 'utf8'));
 
 const icon = fs.readFileSync(path.join(root, 'assets/sentinel-icon.png'));
